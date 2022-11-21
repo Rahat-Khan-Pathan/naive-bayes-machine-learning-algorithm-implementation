@@ -77,25 +77,27 @@ x,y=NaiveBayes.pre_processing(df)
 # print(y.name)
 naive=NaiveBayes(x,y,df)
 naive.train_model()
-test=[]
 
-for uniqueCol in list(x.columns):
-    columnData=list(np.unique(df[uniqueCol]))
-    print(f"Choose an option from {uniqueCol}")
-    for indx in range(len(columnData)):
-        print(f"{indx}. {columnData[indx]}")
-    x=int(input())
-    if x<0 or x>=len(columnData):
-        print("Error occured. Try again!")
-    test.append(columnData[x])
-    print("\n\n")
-print(f"\nYour test data is: {test}\n")
-sumYes,sumNo=naive.test_model(test)
-print(f"Probability of yes: {sumYes}\nProbability of no: {sumNo}",end="\n\n")
-if sumYes > sumNo:
-    print(f"answer is yes, you can {y.name}")
-else:
-    print(f"answer is no, you can't {y.name}")
+while True:
+    print("\n\nEnter you choice of features:\n")
+    test=[]
+    for uniqueCol in list(x.columns):
+        columnData=list(np.unique(df[uniqueCol]))
+        print(f"Choose an option from {uniqueCol}")
+        for indx in range(len(columnData)):
+            print(f"{indx}. {columnData[indx]}")
+        inp=int(input())
+        if inp<0 or inp>=len(columnData):
+            print("Error occured. Try again!")
+        test.append(columnData[inp])
+        print("\n\n")
+    print(f"\nYour test data is: {test}\n")
+    sumYes,sumNo=naive.test_model(test)
+    print(f"Probability of yes: {sumYes}\nProbability of no: {sumNo}",end="\n\n")
+    if sumYes > sumNo:
+        print(f"answer is yes, you can {y.name}")
+    else:
+        print(f"answer is no, you can't {y.name}")
 
             
 
