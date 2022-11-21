@@ -1,7 +1,6 @@
 import csv
 import pandas as pd
 import time
-csv_file = "data.csv"
 data = {
   "Outlook": ["Rainy", "Rainy", "Overcast","Sunny","Sunny","Sunny","Overcast","Rainy","Rainy","Sunny","Rainy","Overcast","Overcast","Sunny"],
   "Temp": ["Hot","Hot","Hot","Mild","Cool","Cool","Cool","Mild","Cool","Mild","Mild","Mild","Hot","Mild"],
