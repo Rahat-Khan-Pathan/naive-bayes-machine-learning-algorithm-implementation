@@ -17,7 +17,7 @@ class NaiveBayes:
         self.y=y
         self.allFeatures=list(x.columns)
         self.dct={}
-        self.total=len(self.df["Play"])
+        self.total=len(self.df[self.y.name])
         self.totalYes=0
         self.totalNo=0
     @staticmethod
@@ -27,7 +27,7 @@ class NaiveBayes:
         return x, y
     
     def train_model(self):
-        for item in self.df["Play"]:
+        for item in self.df[self.y.name]:
             if item=="yes":
                 self.totalYes+=1
             else:
@@ -38,7 +38,7 @@ class NaiveBayes:
                 yes=0
                 no=0
                 for indx in range(len(list(self.df[feature]))):
-                    if self.df[feature][indx]==uniqueItem and self.df["Play"][indx]=="yes":
+                    if self.df[feature][indx]==uniqueItem and self.df[self.y.name][indx]=="yes":
                         yes+=1
                     elif self.df[feature][indx]==uniqueItem:
                         no+=1
@@ -62,14 +62,27 @@ class NaiveBayes:
 
 df = pd.DataFrame(read_data())
 x,y=NaiveBayes.pre_processing(df)
+# print(y.name)
 naive=NaiveBayes(x,y,df)
 naive.train_model()
-sumYes,sumNo=naive.test_model(['Rainy','Mild', 'Normal', 'y'])
-print(sumYes,sumNo)
+test=[]
+
+for uniqueCol in list(x.columns):
+    columnData=list(np.unique(df[uniqueCol]))
+    print(f"Choose an option from {uniqueCol}")
+    for indx in range(len(columnData)):
+        print(f"{indx}. {columnData[indx]}")
+    x=int(input())
+    if x<0 or x>=len(columnData):
+        print("Error occured. Try again!")
+    test.append(columnData[x])
+# print(test)
+sumYes,sumNo=naive.test_model(test)
+print(f"Probability of yes: {sumYes}\nProbability of no: {sumNo}")
 if sumYes > sumNo:
-    print("yes")
+    print("answer is yes")
 else:
-    print("no")
+    print("answer is no")
 
             
 
